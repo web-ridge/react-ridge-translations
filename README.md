@@ -16,12 +16,11 @@ const translationsState = createTranslations({
     loginButton:{
         nl: `Inloggen`,
         en: `Login`,
-    }
+    },
     welcomeText: ({ firstName }: { firstName: string }) => {
         nl: `Hoi ${firstName}`,
         en: `Hello ${firstName}`,
-    }
-    
+    },
   }
 })
 ```
