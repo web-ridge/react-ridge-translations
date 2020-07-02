@@ -1,5 +1,5 @@
 # react-ridge-translations
-Translation library without the struggle
+Type safe translation library without the struggle
 
 React-ridge-translations
 
