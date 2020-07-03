@@ -5,7 +5,8 @@
 **Simple** :muscle: **fast** ⚡️ and **small** :balloon: (400 bytes) translation library for React / React Native
 
 ## Impression
-![react-translations](https://user-images.githubusercontent.com/6492229/86490477-cb669400-bd67-11ea-9e57-e6808ead05bb.gif)
+![react-translations](https://user-images.githubusercontent.com/6492229/86490477-cb669400-bd67-11ea-9e57-e6808ead05bb.gif)   
+   
 Checkout more screenshots here: https://github.com/web-ridge/react-ridge-translations/issues/2
 
 ## Install
