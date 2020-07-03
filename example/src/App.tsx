@@ -1,6 +1,10 @@
 import * as React from "react";
 import translate from "./translate";
 
+function testGlobalTranslations() {
+  alert(translate.translations.appScreen.yes);
+}
+
 function App() {
   const [firstName, setFirstName] = React.useState<string>("");
   const translations = translate.use().appScreen;
@@ -22,6 +26,13 @@ function App() {
       <ChangeLanguageButton language={"fr"} label={"Français"} />
       <ChangeLanguageButton language={"en"} label={"English"} />
       <ChangeLanguageButton language={"nl"} label={"Nederlands"} />
+
+      <br />
+      <br />
+
+      <button onClick={() => testGlobalTranslations()}>
+        Test global translations
+      </button>
     </>
   );
 }
