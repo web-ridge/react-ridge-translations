@@ -93,8 +93,9 @@ translate.setOptions({
 })
 ```
 
+## Detect user language
 
-## React Native
+### React Native
 ```tsx
 import { NativeModules, Platform } from 'react-native';
 
@@ -120,7 +121,7 @@ export default const translate = createTranslations<TranslationLanguages>({
 
 ```
 
-## Get language React
+### React
 ```tsx
 const deviceLanguage = navigator.userLanguage || navigator.language; 
 const availableLanguages = ['nl', 'en', 'fr']
