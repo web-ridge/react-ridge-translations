@@ -1,5 +1,4 @@
 
-# WIP: not USABLE YET
 # react-ridge-translations :fr: :us: :uk: :es: :de: :gb: :cn: :ru: :it:
 ![Bundle Size](https://badgen.net/bundlephobia/minzip/react-ridge-translations) [![npm version](https://badge.fury.io/js/react-ridge-translations.svg)](https://badge.fury.io/js/react-ridge-translations) ![npm](https://img.shields.io/npm/dt/react-ridge-translations.svg)
 
@@ -153,3 +152,12 @@ const translate = createTranslations<TranslationLanguages>()({
 })
 export default translate
 ```
+
+## About us
+
+We want developers to be able to build software faster using modern tools like GraphQL, Golang, React Native without depending on commercial providers like Firebase or AWS Amplify.
+
+Checkout our other products too! :ok_hand: https://github.com/web-ridge
+
+- Easy global state management in React / React Native -> https://github.com/web-ridge/react-ridge-state
+
