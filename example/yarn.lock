@@ -8643,10 +8643,10 @@ react-is@^16.12.0, react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-ridge-translations@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/react-ridge-translations/-/react-ridge-translations-0.0.1.tgz#77a0168ed54f8448d98db5add07072f41c548b93"
-  integrity sha512-W6nAcMCKAbtzt+Y4xHfLlRtaBdapJ+OkbVTISXGcS77E83HAtNqaXWkFXL3P8weWH+qasnBNWtIHS1P47bP/zw==
+react-ridge-translations@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/react-ridge-translations/-/react-ridge-translations-0.0.3.tgz#2312d3c648f8a472e0bc557a622121bede6f510d"
+  integrity sha512-ne+iJ2oMDXS/pqrjdl4qR2p3S+9IUsHrlMHMTz554J0d2Xy8XluKGSYXa/6ZMnhpXKfDO9XfacFbmrci34IZsw==
 
 react-scripts@3.4.1:
   version "3.4.1"

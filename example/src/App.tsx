@@ -1,35 +1,45 @@
-import React from 'react';
+import * as React from "react";
 import translate from "./translate";
 
 function App() {
-  const appScreen= translate.use().appScreen
-
-   const t =  translate.use()
-
+  const [firstName, setFirstName] = React.useState<string>("");
+  const translations = translate.use().appScreen;
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <>
+      <h1>{translations.welcome({ firstName })}</h1>
+      <input
+        type="text"
+        placeholder={translations.fillFirstName}
+        onChange={(e) => setFirstName(e.currentTarget.value)}
+      />
+      <h2>{translations.doYouLike}</h2>
 
-          {appScreen.welcomeText({firstName: 'test'})}
-          <br />
-          {appScreen.yesText}
-      </header>
-        <h2>{appScreen.changeLanguageText}</h2>
-        <button onClick={()=>translate.setOptions({
-            language: 'fr',
-            fallback: 'en',
-        })}>Frans</button>
-        <button onClick={()=>translate.setOptions({
-            language: 'en',
-            fallback: 'en',
-        })}>Engels</button>
-        <button onClick={()=>translate.setOptions({
-            language: 'nl',
-            fallback: 'en',
-        })}>Nederlands</button>
-    </div>
+      {translations.yes}
+
+      <br />
+      <h2>{translations.changeLanguage}</h2>
+      <ChangeLanguageButton language={"fr"} label={"Français"} />
+      <ChangeLanguageButton language={"en"} label={"English"} />
+      <ChangeLanguageButton language={"nl"} label={"Nederlands"} />
+    </>
   );
+}
+
+function ChangeLanguageButton({
+  language,
+  label,
+}: {
+  language: "nl" | "fr" | "en";
+  label: string;
+}) {
+  const onClick = () => {
+    translate.setOptions({
+      language,
+      fallback: "en",
+    });
+  };
+  return <button onClick={onClick}>{label}</button>;
 }
 
 export default App;
