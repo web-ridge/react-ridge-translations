@@ -1,24 +1,29 @@
+declare type CopyFunction<TFn, TR> = TFn extends (...a: infer A) => any ? (...a: A) => TR : string;
+declare type ValueOf<T> = T[keyof T];
+declare type Translations<TGroup> = {
+    [group in keyof TGroup]: {
+        [key in keyof ValueOf<TGroup>]: CopyFunction<ValueOf<TGroup>[key], string>;
+    };
+};
+declare type Options<TValue> = {
+    language: keyof TValue;
+    fallback: keyof TValue;
+};
+declare type TranslationsObject<TGroup, TValue> = {
+    translations: Translations<TGroup>;
+    use: () => Translations<TGroup>;
+    setOptions: (options: Options<TValue>) => any;
+    getOptions: () => Options<TValue>;
+};
 declare type val<T> = (...params: any[]) => T;
 declare type val1<T> = T;
-declare type Translations<T> = {
+declare type TranslationInput<TValue> = {
     [group: string]: {
-        [key: string]: val<T> | val1<T>;
+        [key: string]: val<TValue> | val1<TValue>;
     };
 };
-declare type EasierTranslations<T> = {
-    [group: string]: {
-        [key: string]: val<string> | val1<string>;
-    };
+declare type TranslationLanguagesInput = {
+    [language: string]: string;
 };
-declare type Options<T> = {
-    language: keyof T;
-    fallback: keyof T;
-};
-declare type TranslationsObject<T> = {
-    translations: EasierTranslations<T>;
-    use: () => EasierTranslations<T>;
-    setOptions: (options: Options<T>) => any;
-    getOptions: () => Options<T>;
-};
-export declare function createTranslations<T>(t: Translations<T>, po: Options<T>): TranslationsObject<T>;
+export declare function createTranslations<TValue extends TranslationLanguagesInput>(): <TGroup extends TranslationInput<TValue>>(t: TGroup, po: Options<TValue>) => TranslationsObject<TGroup, TValue>;
 export {};

@@ -23,83 +23,97 @@ type TranslationsObject<TGroup, TValue> = {
 
 
 type SubscriberFunc = (n:number) => any;
+type val<T> = (...params: any[]) => T
+type val1<T> = T
 
-export function createTranslations<TValue, TGroup>(t: TGroup, po: Options<TValue>): TranslationsObject<TGroup, TValue> {
-  // subscribers with callbacks for external updates
-  let sb: SubscriberFunc[] = [];
+type TranslationInput<TValue> = {
+  [group: string]: {
+    [key: string]:  val<TValue> | val1<TValue>
+  },
+}
 
-  let o = po
-  // empty map for easier translations
-  let et = {}
+type TranslationLanguagesInput = {
+  [language: string]: string,
+}
 
-  // convert
-  // {
-  //   homeScreen:{
-  //     loginButton:{
-  //       nl: 'Inloggen,
-  //       en: 'Sign in',
-  //     }
-  //   }
-  // }
-  //
-  // to =>> based on the current language
-  //
-  //   homeScreen:{
-  //     loginButton:'Sign in',
-  //   }
-  // }
+export function createTranslations<TValue extends TranslationLanguagesInput>(){
+  return function <TGroup extends TranslationInput<TValue>>(t: TGroup, po: Options<TValue>): TranslationsObject<TGroup, TValue> {
+    // subscribers with callbacks for external updates
+    let sb: SubscriberFunc[] = [];
 
-  function gen() {
-    // loop translations groups
-    Object.keys(t).forEach(g => {
-      // easierTranslation map with the group in the key
-      et[g] = {}
+    let o = po
+    // empty map for easier translations
+    let et: any = {}
 
-      // loop translations inside group
-      Object.keys(t[g]).forEach(k => {
-        // e.g. 'Sign in'
-        let tv = t[g][k]
+    // convert
+    // {
+    //   homeScreen:{
+    //     loginButton:{
+    //       nl: 'Inloggen,
+    //       en: 'Sign in',
+    //     }
+    //   }
+    // }
+    //
+    // to =>> based on the current language
+    //
+    //   homeScreen:{
+    //     loginButton:'Sign in',
+    //   }
+    // }
 
-        // map them in easier translation map
-          et[g][k] = tv instanceof Function ? (...p) => {
+    function gen() {
+      // loop translations groups
+      Object.keys(t).forEach(g => {
+        // easierTranslation map with the group in the key
+        et[g] = {}
+
+        // loop translations inside group
+        // @ts-ignore
+        Object.keys(t[g]).forEach(k => {
+          // e.g. 'Sign in'
+          // @ts-ignore
+          let tv = t[g][k]
+
+          // map them in easier translation map
+          et[g][k] = tv instanceof Function ? (...p: any) => {
             let z = (tv as Function)(...p)
             return z[o.language] || z[o.fallback]
           } : tv[o.language] || tv[o.fallback]
+        })
       })
-    })
-  }
+    }
 
-  function setOptions(op: Options<TValue>) {
+    function setOptions(op: Options<TValue>) {
       o = op
       gen()
 
       // call subscribers
-      sb.forEach((c: any) => c(p => p + 1));
+      sb.forEach((c: any) => c((p: number) => p + 1));
+    }
+
+    // use hook
+    function use(): any {
+      let [, s] = R.useState<number>(0);
+
+      // subscribe to changes
+      R.useEffect(() => {
+        sb.push(s);
+        return () => {
+          sb = sb.filter((f) => f !== s);
+        };
+      }, [s]);
+
+      // return easier translations object
+      return et;
+    }
+
+    gen()
+    return {
+      translations: et,
+      getOptions: () => o,
+      setOptions,
+      use,
+    };
   }
-
-  // use hook
-  function use(): any {
-    let [, s] = R.useState<number>(0);
-
-    // subscribe to changes
-    R.useEffect(() => {
-      sb.push(s);
-      return () => {
-        sb = sb.filter((f) => f !== s);
-      };
-    }, [s]);
-
-    // return easier translations object
-    return et;
-  }
-
-  // generate translations for current language
-  gen()
-
-  return {
-    translations: et as Translations<TGroup>,
-    getOptions: () => o,
-    setOptions,
-    use,
-  };
 }

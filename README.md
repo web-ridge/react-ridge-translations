@@ -43,7 +43,7 @@ type TranslationLanguages = {
 }
 
 // create a translation object with your translations
-const translate = createTranslations<TranslationLanguages>({
+const translate = createTranslations<TranslationLanguages>()({
   homeScreen:{
     signIn: {
       nl: 'yes',
@@ -119,7 +119,7 @@ function getBestLanguage(): typeof availableLanguages[number] | typeof fallback 
     return availableLanguages.find(al => deviceLanguage.startsWith(al)) || fallback
 }
 
-const translate = createTranslations<TranslationLanguages>({
+const translate = createTranslations<TranslationLanguages>()({
     // ........translations
 }, {
     language: getBestLanguage(), 
@@ -145,7 +145,7 @@ const fallback = 'en'
 function getBestLanguage(): typeof availableLanguages[number] | typeof fallback {
     return availableLanguages.find(al => deviceLanguage.startsWith(al)) || fallback
 }
-const translate = createTranslations<TranslationLanguages>({
+const translate = createTranslations<TranslationLanguages>()({
     // ........translations
 }, {
     language: getBestLanguage(), 
