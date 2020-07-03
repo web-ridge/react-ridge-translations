@@ -1,7 +1,7 @@
 import * as R from "react";
 
 
-type val<T> = (...params: unknown[]) => T
+type val<T> = (...params: any[]) => T
 type val1<T> = T
 
 type Translations<T> = {
@@ -101,6 +101,9 @@ export function createTranslations<T>(t: Translations<T>, po: Options<T>): Trans
     // return easier translations object
     return et;
   }
+
+  // generate translations for current language
+  gen()
 
   return {
     translations: et,

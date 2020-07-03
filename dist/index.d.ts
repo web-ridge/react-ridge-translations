@@ -1,4 +1,4 @@
-declare type val<T> = (...params: unknown[]) => T;
+declare type val<T> = (...params: any[]) => T;
 declare type val1<T> = T;
 declare type Translations<T> = {
     [group: string]: {

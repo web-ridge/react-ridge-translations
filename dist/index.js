@@ -33,6 +33,7 @@ function createTranslations(t, po) {
         }, [s]);
         return et;
     }
+    gen();
     return {
         translations: et,
         getOptions: () => o,
