@@ -3,8 +3,12 @@
 ![Bundle Size](https://badgen.net/bundlephobia/minzip/react-ridge-translations) [![npm version](https://badge.fury.io/js/react-ridge-translations.svg)](https://badge.fury.io/js/react-ridge-translations) ![npm](https://img.shields.io/npm/dt/react-ridge-translations.svg)
 
 **Simple** :muscle: **fast** ⚡️ and **small** :balloon: (400 bytes) translation library for React / React Native
+
+## Impression
 ![react-translations](https://user-images.githubusercontent.com/6492229/86490477-cb669400-bd67-11ea-9e57-e6808ead05bb.gif)
 Checkout more screenshots here: https://github.com/web-ridge/react-ridge-translations/issues/2
+
+## Install
 
 ```
 yarn add react-ridge-translations
