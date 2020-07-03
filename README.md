@@ -1,42 +1,114 @@
-# react-ridge-translations
-Type safe translation library without the struggle
+# react-ridge-translations :fr: :us: :uk: :es: :de: ⚡️ :gb: :cn: :ru: :it: :nl:
 
-React-ridge-translations
+![Bundle Size](https://badgen.net/bundlephobia/minzip/react-ridge-translations) [![npm version](https://badge.fury.io/js/react-ridge-translations.svg)](https://badge.fury.io/js/react-ridge-translations) ![npm](https://img.shields.io/npm/dt/react-ridge-translations.svg)
+
+Very small type safe translation library without the struggle!
 
 
-Grouped translations
-If you have a realy big app it would be nice to group translations
-
+## Getting started
 ```tsx
+// translate.ts
 
-const translationsState = createTranslations({
-  language: 'nl',
-  default: 'en', // fallback
+// first describe which languages are allowed/required (Typescript)
+type TranslationLanguages = {
+  nl: string
+  fr: string
+  be: string
+}
+
+// create a translation object with your translations
+import { createTranslations } from 'react-ridge-translations'
+export default const translate = createTranslations<TranslationLanguages>({
   homeScreen:{
-    loginButton:{
-        nl: `Inloggen`,
-        en: `Login`,
+    signIn: {
+      nl: 'yes',
+      fr: 'yes',
+      be: 'yes',
     },
-    welcomeText: ({ firstName }: { firstName: string }) => {
-        nl: `Hoi ${firstName}`,
-        en: `Hello ${firstName}`,
-    },
+    welcomeText: ({ firstName }: { firstName: string }) => ({
+      nl: `Hoi ${firstName}`,
+      fr: `Hello ${firstName}`,
+      be: `Hello ${firstName}`,
+    }),
   }
+}, {
+    language: 'nl',
+    fallback: 'en',
 })
 ```
 
-// use them globally (e.g.) in your redux-saga 
+### Usage in React / React Native components
 ```tsx
-translationsState.homeScreen.loginButton (it automatically fixes the language for you here)
+import translate from './translate'
+// inside components
+export default function HomeScreen() {   
+    // use is a hook which will update automatically if language change :)
+    const homeTranslations = translate.use().homeScreen  
+    return (
+        <div>
+            {homeTranslations.welcomeText({ firstName: 'Richard' })}
+            {homeTranslations.signIn}
+        </div>
+    )
+}
 ```
-// use them in your component
+
+
+## Usage outside components
 ```tsx
+import translate from './translate'
+translate.translations.homeScreen.loginButton
+```
 
-const translations = translationsState.use()
-return (
-  <div>
-   <button>{translations.homeScreen.loginButton}</button>
-  </div>
-)
 
+## Changing language
+```tsx
+import translate from './translate'
+translate.setOptions({
+    language: 'nl',
+    fallback: 'en',
+})
+```
+
+
+## React Native
+```tsx
+import { NativeModules, Platform } from 'react-native';
+
+const deviceLanguage =
+          (Platform.OS === 'ios'
+            ? NativeModules.SettingsManager.settings.AppleLocale ||
+              NativeModules.SettingsManager.settings.AppleLanguages[0] // iOS 13
+            : NativeModules.I18nManager.localeIdentifier) || '';
+
+const availableLanguages = ['nl', 'en', 'fr']
+const fallback = 'en'
+
+function getBestLanguage(): string {
+    return availableLanguages.find(al => deviceLanguage.startsWith(al)) || fallback
+}
+
+export default const translate = createTranslations<TranslationLanguages>({
+    // ........translations
+}, {
+    language: getBestLanguage(), 
+    fallback,
+})
+
+```
+
+## Get language React
+```tsx
+const deviceLanguage = navigator.userLanguage || navigator.language; 
+const availableLanguages = ['nl', 'en', 'fr']
+const fallback = 'en'
+function getBestLanguage(): string {
+    return availableLanguages.find(al => deviceLanguage.startsWith(al)) || fallback
+}
+export default const translate = createTranslations<TranslationLanguages>({
+    // ........translations
+}, {
+    language: getBestLanguage(), 
+    fallback,
+})
 ```
