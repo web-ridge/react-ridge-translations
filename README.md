@@ -32,9 +32,8 @@ We were frustrated with the API of other libraries and wanted a more type safe a
 
 ```tsx
 // translate.ts
-
-
 import { createTranslations } from 'react-ridge-translations'
+
 // first describe which languages are allowed/required (Typescript)
 type TranslationLanguages = {
   nl: string
