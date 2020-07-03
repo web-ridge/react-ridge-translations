@@ -43,7 +43,7 @@ type TranslationLanguages = {
 }
 
 // create a translation object with your translations
-export default const translate = createTranslations<TranslationLanguages>({
+const translate = createTranslations<TranslationLanguages>({
   homeScreen:{
     signIn: {
       nl: 'yes',
@@ -60,6 +60,7 @@ export default const translate = createTranslations<TranslationLanguages>({
     language: 'nl',
     fallback: 'en',
 })
+export default translate
 ```
 
 ### Usage in React / React Native components
@@ -99,41 +100,56 @@ translate.setOptions({
 ### React Native
 ```tsx
 import { NativeModules, Platform } from 'react-native';
+import { createTranslations } from 'react-ridge-translations'
+// first describe which languages are allowed/required (Typescript)
+type TranslationLanguages = {
+    nl: string
+    fr: string
+    en: string
+}
 
-const deviceLanguage =
-          (Platform.OS === 'ios'
-            ? NativeModules.SettingsManager.settings.AppleLocale ||
-              NativeModules.SettingsManager.settings.AppleLanguages[0] // iOS 13
-            : NativeModules.I18nManager.localeIdentifier) || '';
-
-const availableLanguages = ['nl', 'en', 'fr']
+const deviceLanguage = (Platform.OS === 'ios'
+                                   ? NativeModules.SettingsManager.settings.AppleLocale ||
+                                     NativeModules.SettingsManager.settings.AppleLanguages[0] // iOS 13
+                                   : NativeModules.I18nManager.localeIdentifier) || '';;
+const availableLanguages: (keyof TranslationLanguages)[] = ['nl', 'en', 'fr'] ;
 const fallback = 'en'
 
-function getBestLanguage(): string {
+function getBestLanguage(): typeof availableLanguages[number] | typeof fallback {
     return availableLanguages.find(al => deviceLanguage.startsWith(al)) || fallback
 }
 
-export default const translate = createTranslations<TranslationLanguages>({
+const translate = createTranslations<TranslationLanguages>({
     // ........translations
 }, {
     language: getBestLanguage(), 
     fallback,
 })
-
+export default translate
 ```
 
 ### React
 ```tsx
-const deviceLanguage = navigator.userLanguage || navigator.language; 
-const availableLanguages = ['nl', 'en', 'fr']
+import { createTranslations } from 'react-ridge-translations'
+// first describe which languages are allowed/required (Typescript)
+type TranslationLanguages = {
+    nl: string
+    fr: string
+    en: string
+}
+
+const deviceLanguage = navigator.language;
+const availableLanguages: (keyof TranslationLanguages)[] = ['nl', 'en', 'fr'] ;
 const fallback = 'en'
-function getBestLanguage(): string {
+
+function getBestLanguage(): typeof availableLanguages[number] | typeof fallback {
     return availableLanguages.find(al => deviceLanguage.startsWith(al)) || fallback
 }
-export default const translate = createTranslations<TranslationLanguages>({
+const translate = createTranslations<TranslationLanguages>({
     // ........translations
 }, {
     language: getBestLanguage(), 
     fallback,
 })
+export default translate
 ```

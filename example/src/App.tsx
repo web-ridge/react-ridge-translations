@@ -2,21 +2,20 @@ import React from 'react';
 import translate from "./translate";
 
 function App() {
-  const {yesText,welcomeText,changeLanguageText} = translate.use().appScreen
+  const appScreen= translate.use().appScreen
 
    const t =  translate.use()
-console.log(t.)
+
 
   return (
     <div className="App">
       <header className="App-header">
-          {/*
-          // @ts-ignore */}
-          {welcomeText({firstName: 'Richard'})}
+
+          {appScreen.welcomeText({firstName: 'test'})}
           <br />
-          {yesText}
+          {appScreen.yesText}
       </header>
-        <h2>{changeLanguageText}</h2>
+        <h2>{appScreen.changeLanguageText}</h2>
         <button onClick={()=>translate.setOptions({
             language: 'fr',
             fallback: 'en',

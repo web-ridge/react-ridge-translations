@@ -1,35 +1,30 @@
 import * as R from "react";
 
+type CopyFunction<TFn, TR> = TFn extends (...a: infer A) => any ? (...a:A) => TR: string
+type ValueOf<T> = T[keyof T];
 
-type val<T> = (...params: any[]) => T
-type val1<T> = T
-
-type Translations<T> = {
-    [group: string]: {
-        [key: string]:  val<T> | val1<T>
-    },
+type Translations<TGroup> = {
+    [group in keyof TGroup]: {
+        [key in keyof ValueOf<TGroup>]: CopyFunction<ValueOf<TGroup>[key], string>
+    }
 }
 
-
-
-type Options<T> = {
-    language: keyof T,
-    fallback: keyof T,
+type Options<TValue> = {
+    language: keyof TValue,
+    fallback: keyof TValue,
 }
 
-
-
-type TranslationsObject<T> = {
-    translations: Translations<T>,
-    use: () => Translations<T>;
-    setOptions: (options: Options<T>) => any;
-    getOptions: () => Options<T>,
+type TranslationsObject<TGroup, TValue> = {
+    translations: Translations<TGroup>,
+    use: () => Translations<TGroup>;
+    setOptions: (options: Options<TValue>) => any;
+    getOptions: () => Options<TValue>,
 }
 
 
 type SubscriberFunc = (n:number) => any;
 
-export function createTranslations<T>(t: Translations<T>, po: Options<T>): TranslationsObject<T> {
+export function createTranslations<TValue, TGroup>(t: TGroup, po: Options<TValue>): TranslationsObject<TGroup, TValue> {
     // subscribers with callbacks for external updates
     let sb: SubscriberFunc[] = [];
 
@@ -61,8 +56,10 @@ export function createTranslations<T>(t: Translations<T>, po: Options<T>): Trans
             et[g] = {}
 
             // loop translations inside group
+            // @ts-ignore
             Object.keys(t[g]).forEach(k => {
                 // e.g. 'Sign in'
+                // @ts-ignore
                 let tv = t[g][k]
 
                 // map them in easier translation map
@@ -74,7 +71,7 @@ export function createTranslations<T>(t: Translations<T>, po: Options<T>): Trans
         })
     }
 
-    function setOptions(op: Options<T>) {
+    function setOptions(op: Options<TValue>) {
         o = op
         gen()
 
@@ -106,13 +103,23 @@ export function createTranslations<T>(t: Translations<T>, po: Options<T>): Trans
     };
 }
 
-
 // first describe which languages are allowed/required (Typescript)
 type TranslationLanguages = {
     nl: string
     fr: string
     en: string
 }
+
+const deviceLanguage = navigator.language;
+const availableLanguages: (keyof TranslationLanguages)[] = ['nl', 'en', 'fr'] ;
+const fallback = 'en'
+
+function getBestLanguage(): typeof availableLanguages[number] | typeof fallback {
+    return availableLanguages.find(al => deviceLanguage.startsWith(al)) || fallback
+}
+
+
+
 
 // create a translation object with your translations
 const translate = createTranslations<TranslationLanguages>({
@@ -134,7 +141,7 @@ const translate = createTranslations<TranslationLanguages>({
         }
     }
 }, {
-    language: 'nl',
+    language: getBestLanguage(),
     fallback: 'en',
 })
 export default translate

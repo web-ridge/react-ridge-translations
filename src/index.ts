@@ -1,39 +1,30 @@
 import * as R from "react";
 
+type CopyFunction<TFn, TR> = TFn extends (...a: infer A) => any ? (...a:A) => TR: string
+type ValueOf<T> = T[keyof T];
 
-type val<T> = (...params: any[]) => T
-type val1<T> = T
-
-type Translations<T> = {
-  [group: string]: {
-    [key: string]:  val<T> | val1<T>
-  },
+type Translations<TGroup> = {
+  [group in keyof TGroup]: {
+    [key in keyof ValueOf<TGroup>]: CopyFunction<ValueOf<TGroup>[key], string>
+  }
 }
 
-type EasierTranslations<T>  = {
-  [group: string]: {
-    [key: string]:  val<string> | val1<string>
-  },
+type Options<TValue> = {
+  language: keyof TValue,
+  fallback: keyof TValue,
 }
 
-type Options<T> = {
-  language: keyof T,
-  fallback: keyof T,
-}
-
-
-
-type TranslationsObject<T> = {
-  translations: EasierTranslations<T>,
-  use: () => EasierTranslations<T>;
-  setOptions: (options: Options<T>) => any;
-  getOptions: () => Options<T>,
+type TranslationsObject<TGroup, TValue> = {
+  translations: Translations<TGroup>,
+  use: () => Translations<TGroup>;
+  setOptions: (options: Options<TValue>) => any;
+  getOptions: () => Options<TValue>,
 }
 
 
 type SubscriberFunc = (n:number) => any;
 
-export function createTranslations<T>(t: Translations<T>, po: Options<T>): TranslationsObject<T> {
+export function createTranslations<TValue, TGroup>(t: TGroup, po: Options<TValue>): TranslationsObject<TGroup, TValue> {
   // subscribers with callbacks for external updates
   let sb: SubscriberFunc[] = [];
 
@@ -78,7 +69,7 @@ export function createTranslations<T>(t: Translations<T>, po: Options<T>): Trans
     })
   }
 
-  function setOptions(op: Options<T>) {
+  function setOptions(op: Options<TValue>) {
       o = op
       gen()
 
@@ -106,7 +97,7 @@ export function createTranslations<T>(t: Translations<T>, po: Options<T>): Trans
   gen()
 
   return {
-    translations: et,
+    translations: et as Translations<TGroup>,
     getOptions: () => o,
     setOptions,
     use,
