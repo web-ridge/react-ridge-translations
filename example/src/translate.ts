@@ -23,6 +23,11 @@ function getBestLanguage():
 const translate = createTranslations<TranslationLanguages>()(
   {
     appScreen: {
+      welcome: ({ firstName }: { firstName: string }) => ({
+        nl: `Hallo ${firstName}`,
+        fr: `Bonjour ${firstName}`,
+        en: `Hello ${firstName}`,
+      }),
       yes: {
         nl: "Ja",
         fr: "Oui",
@@ -38,11 +43,6 @@ const translate = createTranslations<TranslationLanguages>()(
         fr: "Aimez-vous cette bibliothèque?",
         en: "Do you like this library?",
       },
-      welcome: ({ firstName }: { firstName: string }) => ({
-        nl: `Hallo ${firstName}`,
-        fr: `Bonjour ${firstName}`,
-        en: `Hello ${firstName}`,
-      }),
       changeLanguage: {
         nl: "Verander taal",
         fr: "Changer de langue",

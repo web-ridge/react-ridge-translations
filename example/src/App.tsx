@@ -10,7 +10,12 @@ function App() {
   const translations = translate.use().appScreen;
 
   return (
-    <>
+    <div
+      style={{
+        margin: "0 auto",
+        maxWidth: 400,
+      }}
+    >
       <h1>{translations.welcome({ firstName })}</h1>
       <input
         type="text"
@@ -33,7 +38,7 @@ function App() {
       <button onClick={() => testGlobalTranslations()}>
         Test global translations
       </button>
-    </>
+    </div>
   );
 }
 
