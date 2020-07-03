@@ -64,14 +64,13 @@ export default const translate = createTranslations<TranslationLanguages>({
 ### Usage in React / React Native components
 ```tsx
 import translate from './translate'
-// inside components
 export default function HomeScreen() {   
     // use is a hook which will update automatically if language change :)
-    const homeTranslations = translate.use().homeScreen  
+    const ht = translate.use().homeScreen
     return (
         <div>
-            {homeTranslations.welcomeText({ firstName: 'Richard' })}
-            {homeTranslations.signIn}
+            {ht.welcomeText({ firstName: 'Richard' })}
+            {ht.signIn}
         </div>
     )
 }
