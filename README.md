@@ -33,6 +33,8 @@ We were frustrated with the API of other libraries and wanted a more type safe a
 ```tsx
 // translate.ts
 
+
+import { createTranslations } from 'react-ridge-translations'
 // first describe which languages are allowed/required (Typescript)
 type TranslationLanguages = {
   nl: string
@@ -41,7 +43,6 @@ type TranslationLanguages = {
 }
 
 // create a translation object with your translations
-import { createTranslations } from 'react-ridge-translations'
 export default const translate = createTranslations<TranslationLanguages>({
   homeScreen:{
     signIn: {
