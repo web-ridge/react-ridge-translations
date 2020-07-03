@@ -85,7 +85,7 @@ export default function HomeScreen() {
 ```
 
 
-## Usage outside components
+## Usage outside components / Class components
 ```tsx
 import translate from './translate'
 translate.translations.homeScreen.loginButton
