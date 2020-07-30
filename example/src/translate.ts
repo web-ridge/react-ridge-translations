@@ -1,4 +1,4 @@
-import { createTranslations } from "react-ridge-translations";
+import { createTranslations } from "./translation-lib";
 
 // first describe which languages are allowed/required (Typescript)
 type TranslationLanguages = {
@@ -53,6 +53,7 @@ const translate = createTranslations<TranslationLanguages>()(
   {
     language: getBestLanguage(),
     fallback: "en",
-  }
+  },
+  availableLanguages
 );
 export default translate;
