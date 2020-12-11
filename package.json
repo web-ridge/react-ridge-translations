@@ -1,6 +1,6 @@
 {
   "name": "react-ridge-translations",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "react-ridge-translations is a type safe translation library without the struggle",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

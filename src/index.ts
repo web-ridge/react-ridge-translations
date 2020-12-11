@@ -1,13 +1,15 @@
 import * as R from "react";
 
-type CopyFunction<TFn, TR> = TFn extends (...a: infer A) => any ? (...a:A) => TR: string
-type ValueOf<T> = T[keyof T];
+type CopyFunction<TFn, TR> = TFn extends (...a: infer A) => any
+  ? (...a: A) => TR
+  : string;
 
 type Translations<TGroup> = {
   [group in keyof TGroup]: {
-    [key in keyof ValueOf<TGroup>]: CopyFunction<ValueOf<TGroup>[key], string>
-  }
-}
+    [key in keyof TGroup[group]]: CopyFunction<TGroup[group][key], string>;
+  };
+};
+
 
 type Options<TValue> = {
   language: keyof TValue,
