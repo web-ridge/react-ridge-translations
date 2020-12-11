@@ -89,8 +89,13 @@ export default function HomeScreen() {
 }
 ```
 
+<<<<<<< HEAD
 ## Usage outside components
 
+=======
+
+## Usage outside components / Class components
+>>>>>>> cc085b6500418f4b16fbb91dcf92fb5b42ce116e
 ```tsx
 import translate from "./translate";
 translate.translations.homeScreen.loginButton;
@@ -184,8 +189,13 @@ export default translate;
 
 ## About us
 
-We want developers to be able to build software faster using modern tools like GraphQL, Golang, React Native without depending on commercial providers like Firebase or AWS Amplify.
+We want developers to be able to build software faster using modern tools like GraphQL, Golang, React Native.
 
 Checkout our other products too! :ok_hand: https://github.com/web-ridge
 
+<<<<<<< HEAD
 - Easy global state management in React / React Native -> https://github.com/web-ridge/react-ridge-state
+=======
+Easy global state management in React / React Native -> https://github.com/web-ridge/react-ridge-state
+
+>>>>>>> cc085b6500418f4b16fbb91dcf92fb5b42ce116e
