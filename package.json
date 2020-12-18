@@ -1,6 +1,6 @@
 {
   "name": "react-ridge-translations",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "react-ridge-translations is a type safe translation library without the struggle",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,7 +8,8 @@
   "license": "MIT",
   "readme": "README.md",
   "scripts": {
-    "jest": "jest"
+    "jest": "jest",
+    "build": "tsc"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.10.3",

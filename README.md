@@ -96,14 +96,19 @@ import translate from "./translate";
 translate.translations.homeScreen.loginButton;
 ```
 
-## Changing language
+## Change langugage / subscribe
 
 ```tsx
 import translate from "./translate";
+// global
 translate.setOptions({
   language: "nl",
   fallback: "en",
 });
+translate.getOptions();
+
+// hook
+const { language, fallback } = useOptions();
 ```
 
 ## Detect user language

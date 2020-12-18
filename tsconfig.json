@@ -5,7 +5,8 @@
     "declaration": true,
     "outDir": "./dist",
     "removeComments": true,
-    "jsx": "react"
+    "jsx": "react",
+    "skipLibCheck": true
   },
-  "include": ["src/*"]
+  "include": ["src/*"],
 }

@@ -24,7 +24,7 @@ function createTranslations() {
             gen();
             sb.forEach((c) => c((p) => p + 1));
         }
-        function use() {
+        function subscribe() {
             let [, s] = R.useState(0);
             R.useEffect(() => {
                 sb.push(s);
@@ -32,13 +32,21 @@ function createTranslations() {
                     sb = sb.filter((f) => f !== s);
                 };
             }, [s]);
+        }
+        function use() {
+            subscribe();
             return et;
+        }
+        function useOptions() {
+            subscribe();
+            return o;
         }
         gen();
         return {
             translations: et,
             getOptions: () => o,
             setOptions,
+            useOptions,
             use,
         };
     };

@@ -19,6 +19,7 @@ type Options<TValue> = {
 type TranslationsObject<TGroup, TValue> = {
   translations: Translations<TGroup>,
   use: () => Translations<TGroup>;
+  useOptions: () => Options<TValue>;
   setOptions: (options: Options<TValue>) => any;
   getOptions: () => Options<TValue>,
 }
@@ -94,10 +95,8 @@ export function createTranslations<TValue extends TranslationLanguagesInput>(){
       sb.forEach((c: any) => c((p: number) => p + 1));
     }
 
-    // use hook
-    function use(): any {
+    function subscribe() {
       let [, s] = R.useState<number>(0);
-
       // subscribe to changes
       R.useEffect(() => {
         sb.push(s);
@@ -105,9 +104,17 @@ export function createTranslations<TValue extends TranslationLanguagesInput>(){
           sb = sb.filter((f) => f !== s);
         };
       }, [s]);
+    }
 
-      // return easier translations object
+    // use hook
+    function use(): any {
+      subscribe()
       return et;
+    }
+
+    function useOptions() {
+      subscribe()
+      return o
     }
 
     gen()
@@ -115,6 +122,7 @@ export function createTranslations<TValue extends TranslationLanguagesInput>(){
       translations: et,
       getOptions: () => o,
       setOptions,
+      useOptions,
       use,
     };
   }

@@ -1,8 +1,7 @@
 declare type CopyFunction<TFn, TR> = TFn extends (...a: infer A) => any ? (...a: A) => TR : string;
-declare type ValueOf<T> = T[keyof T];
 declare type Translations<TGroup> = {
     [group in keyof TGroup]: {
-        [key in keyof ValueOf<TGroup>]: CopyFunction<ValueOf<TGroup>[key], string>;
+        [key in keyof TGroup[group]]: CopyFunction<TGroup[group][key], string>;
     };
 };
 declare type Options<TValue> = {
@@ -12,6 +11,7 @@ declare type Options<TValue> = {
 declare type TranslationsObject<TGroup, TValue> = {
     translations: Translations<TGroup>;
     use: () => Translations<TGroup>;
+    useOptions: () => Options<TValue>;
     setOptions: (options: Options<TValue>) => any;
     getOptions: () => Options<TValue>;
 };
